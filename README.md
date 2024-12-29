@@ -25,3 +25,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## About
+Una tienda hecha en Angular que se conecta a https://fakeapi.platzi.com/ y desplegada en vercel en la siguiente url:  https://store-l58fwb47b-danielsuarezcs-projects.vercel.app
