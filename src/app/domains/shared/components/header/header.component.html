@@ -16,22 +16,26 @@
         <ul class="flex space-x-6">
           <li>
             <a
-              href="#"
-              class="block underline hover:underline"
+              routerLink="/"
+              routerLinkActive="underline"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="block hover:underline"
               aria-current="page"
               >Home</a
             >
           </li>
           <li>
             <a
-              href="#"
+              routerLink="/about"
+              routerLinkActive="underline"
               class="block hover:underline"
               >About</a
             >
           </li>
           <li>
             <a
-              href="#"
+              routerLink="/servicios"
+              routerLinkActive="underline"
               class="block hover:underline"
               >Services</a
             >
@@ -84,11 +88,11 @@
     </button>
   </div>
   <div *ngFor="let product of cart()">
+    <br>
     <a href="#" class="block max-w-sm p-6 py-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-
-    <h6 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{product.title}}</h6>
-    <img src="{{product.images[0]}}" alt="image" class="w-full h-48 object-cover mb-4">
-    <p class="font-normal text-gray-700 dark:text-gray-400">{{product.price}}</p>
+      <p class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{product.title}}</p>
+      <img src="{{product.images[0]}}" alt="image" class="w-full h-48 object-cover mb-4">
+      <p class="font-normal text-gray-700 dark:text-gray-400">{{product.price}}</p>
     </a>
   </div>
 
