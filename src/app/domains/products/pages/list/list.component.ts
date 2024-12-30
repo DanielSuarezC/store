@@ -1,26 +1,46 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, Input, signal, SimpleChange, SimpleChanges } from '@angular/core';
 import { ProductComponent } from '@products/components/product/product.component';
 import { CommonModule } from '@angular/common';
 import { Product } from '@shared/models/product.model';
 import { HeaderComponent } from '@shared/components/header/header.component';
 import { CartService } from '@shared/services/cart.service';
 import { ProductService } from '@shared/services/product.service';
+import { CategoryService } from '@shared/services/category.service';
+import { Category } from '@shared/models/category.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule,ProductComponent, HeaderComponent],
+  imports: [CommonModule,ProductComponent, RouterLink],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
 })
-export class ListComponent {
+export default class ListComponent {
 
   products = signal<Product[]>([]);
+  categories = signal<Category[]>([]);
   private cartService = inject(CartService);
   private productService = inject(ProductService);
+  private categorieService = inject(CategoryService);
+
+  @Input() category_id?: string;
   
   ngOnInit(){
-    this.productService.getProducts()
+    this.getCategories();
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    this.getProducts(); 
+  }
+
+  addToCart(product: Product){
+  //  this.cart.update(prevState => [...prevState, product]);
+  this.cartService.addTocart(product);
+  }
+
+  private getProducts(category_id?: string){
+    this.productService.getProducts(this.category_id)
     .subscribe({
       next: (products) => {
         this.products.set(products);
@@ -28,12 +48,19 @@ export class ListComponent {
       error: (error) => {
         console.error(error);
       }
-    })
+    });
   }
 
-  addToCart(product: Product){
-  //  this.cart.update(prevState => [...prevState, product]);
-  this.cartService.addTocart(product);
+  private getCategories(){
+    this.categorieService.getAll()
+    .subscribe({
+      next: (data) => {
+        this.categories.set(data);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
 }
